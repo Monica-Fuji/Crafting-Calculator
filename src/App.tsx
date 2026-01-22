@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Calculator, Ruler, Triangle, Percent, Languages } from 'lucide-react';
 import './index.css';
-import './App.css';
 
 type CalculatorType = 'circular-skirt' | 'circular-frill' | 'ratio' | 'pythagorean';
 type Language = 'en' | 'ja';
@@ -276,9 +275,9 @@ const CircularSkirtCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
 
 // Circular Frill Calculator
 const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
-  const [arcLength, setArcLength] = useState<string>('200');
-  const [angle, setAngle] = useState<string>('180');
-  const [frillWidth, setFrillWidth] = useState<string>('5');
+  const [arcLength, setArcLength] = useState<string>('');
+  const [angle, setAngle] = useState<string>('');
+  const [frillWidth, setFrillWidth] = useState<string>('');
   const [results, setResults] = useState<{A: number, B: number} | null>(null);
 
   const calculate = () => {
@@ -311,6 +310,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={arcLength}
             onChange={(e) => setArcLength(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
+            placeholder="e.g., 200"
           />
           <p className="text-sm text-gray-500 mt-1">{t.arcNote}</p>
         </div>
@@ -322,6 +322,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={angle}
             onChange={(e) => setAngle(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
+            placeholder="e.g., 180"
           />
         </div>
 
@@ -332,6 +333,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={frillWidth}
             onChange={(e) => setFrillWidth(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
+            placeholder="e.g., 5"
           />
         </div>
 
