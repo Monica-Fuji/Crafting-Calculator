@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Calculator, Ruler, Triangle, Percent, Languages } from 'lucide-react';
+import './index.css';
+import './App.css';
 
 type CalculatorType = 'circular-skirt' | 'circular-frill' | 'ratio' | 'pythagorean';
 type Language = 'en' | 'ja';
