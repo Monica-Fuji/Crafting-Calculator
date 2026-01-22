@@ -1,19 +1,118 @@
 import React, { useState } from 'react';
-import { Calculator, Ruler, Triangle, Percent } from 'lucide-react';
+import { Calculator, Ruler, Triangle, Percent, Languages } from 'lucide-react';
 
 type CalculatorType = 'circular-skirt' | 'circular-frill' | 'ratio' | 'pythagorean';
+type Language = 'en' | 'ja';
+
+// Translation dictionary
+const translations = {
+  en: {
+    title: "Crafting Pattern Calculator",
+    subtitle: "Tools for sewing, crafting, and pattern making",
+    circularSkirt: "Circular Skirt",
+    circularFrill: "Circular Frill",
+    ratioScale: "Ratio Scale",
+    pythagorean: "Pythagorean",
+    calculate: "Calculate",
+    results: "Calculation Results",
+    // Circular Skirt
+    skirtTitle: "Flare Skirt Pattern Calculator",
+    waistSize: "Waist Size (cm)",
+    desiredAngle: "Desired Angle (degrees)",
+    angleNote: "90° = quarter circle, 180° = half circle, 360° = full circle",
+    lengthExcludingBelt: "Length excluding belt (cm)",
+    innerRadius: "A (Inner Radius):",
+    outerRadius: "B (Outer Radius):",
+    waistAllowance: "C (Waist + Allowance):",
+    // Circular Frill
+    frillTitle: "Circular Frill Radius Calculator",
+    arcLength: "Desired Arc Length (cm)",
+    arcNote: "Length where the frill will be attached",
+    frillWidth: "Frill Width (cm)",
+    innerCircleRadius: "Inner Circle Radius A:",
+    outerCircleRadius: "Outer Circle Radius B:",
+    // Ratio
+    ratioTitle: "Ratio Scale Calculator",
+    ratioSubtitle: "Use this to scale patterns or create life-size items from references",
+    ratioExample: "Example: If 3cm in pattern = 4cm in real life, what is 1cm in pattern?",
+    result: "Result",
+    units: "units (same as inputs)",
+    // Pythagorean
+    pythagTitle: "Pythagorean Theorem Calculator",
+    pythagSubtitle: "Calculate beveled edge lengths and diagonal measurements",
+    pythagFormula: "Find the hypotenuse (c) from two sides",
+    sideA: "Side A (cm)",
+    sideB: "Side B (cm)",
+    hypotenuse: "Hypotenuse (c):",
+  },
+  ja: {
+    title: "型紙計算ツール",
+    subtitle: "裁縫、手芸、型紙作成のためのツール",
+    circularSkirt: "フレアスカート",
+    circularFrill: "円形フリル",
+    ratioScale: "比率計算",
+    pythagorean: "三平方の定理",
+    calculate: "計算する",
+    results: "計算結果",
+    // Circular Skirt
+    skirtTitle: "フレアスカート製図計算",
+    waistSize: "ウエストサイズ (cm)",
+    desiredAngle: "作りたい角度 (度)",
+    angleNote: "90° = 四分円、180° = 半円、360° = 全円",
+    lengthExcludingBelt: "ベルトを除いた丈 (cm)",
+    innerRadius: "A (内側の半径):",
+    outerRadius: "B (外側の半径):",
+    waistAllowance: "C (ウエスト+ゆとり):",
+    // Circular Frill
+    frillTitle: "円形フリル半径計算",
+    arcLength: "作りたい弧の長さ (cm)",
+    arcNote: "フリルを取り付ける箇所の長さ",
+    frillWidth: "フリルの長さ(幅) (cm)",
+    innerCircleRadius: "内側の円の半径 A:",
+    outerCircleRadius: "外側の円の半径 B:",
+    // Ratio
+    ratioTitle: "比率スケール計算",
+    ratioSubtitle: "パターンの拡大縮小や、実物大アイテムの作成に使用",
+    ratioExample: "例: パターンの3cmが実物の4cmの場合、パターンの1cmは？",
+    result: "結果",
+    units: "単位（入力と同じ）",
+    // Pythagorean
+    pythagTitle: "三平方の定理計算",
+    pythagSubtitle: "斜辺の長さや対角線の測定を計算",
+    pythagFormula: "2辺から斜辺(c)を求める",
+    sideA: "辺 A (cm)",
+    sideB: "辺 B (cm)",
+    hypotenuse: "斜辺 (c):",
+  }
+};
 
 const CraftingCalculator: React.FC = () => {
   const [activeCalc, setActiveCalc] = useState<CalculatorType>('circular-skirt');
+  const [language, setLanguage] = useState<Language>('en');
+  
+  const t = translations[language];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
-          <Calculator className="text-indigo-600" />
-          Crafting Pattern Calculator
-        </h1>
-        <p className="text-gray-600 mb-8">Tools for sewing, crafting, and pattern making</p>
+        <div className="flex justify-between items-start mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+              <Calculator className="text-indigo-600" />
+              {t.title}
+            </h1>
+            <p className="text-gray-600">{t.subtitle}</p>
+          </div>
+          
+          {/* Language Toggle */}
+          <button
+            onClick={() => setLanguage(language === 'en' ? 'ja' : 'en')}
+            className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg shadow hover:shadow-md transition-all"
+          >
+            <Languages className="w-5 h-5 text-indigo-600" />
+            <span className="font-medium">{language === 'en' ? '日本語' : 'English'}</span>
+          </button>
+        </div>
 
         {/* Calculator Selection */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
@@ -26,7 +125,7 @@ const CraftingCalculator: React.FC = () => {
             }`}
           >
             <Ruler className="w-5 h-5 mx-auto mb-2" />
-            Circular Skirt
+            {t.circularSkirt}
           </button>
           <button
             onClick={() => setActiveCalc('circular-frill')}
@@ -37,7 +136,7 @@ const CraftingCalculator: React.FC = () => {
             }`}
           >
             <Ruler className="w-5 h-5 mx-auto mb-2" />
-            Circular Frill
+            {t.circularFrill}
           </button>
           <button
             onClick={() => setActiveCalc('ratio')}
@@ -48,7 +147,7 @@ const CraftingCalculator: React.FC = () => {
             }`}
           >
             <Percent className="w-5 h-5 mx-auto mb-2" />
-            Ratio Scale
+            {t.ratioScale}
           </button>
           <button
             onClick={() => setActiveCalc('pythagorean')}
@@ -59,16 +158,16 @@ const CraftingCalculator: React.FC = () => {
             }`}
           >
             <Triangle className="w-5 h-5 mx-auto mb-2" />
-            Pythagorean
+            {t.pythagorean}
           </button>
         </div>
 
         {/* Calculator Components */}
         <div className="bg-white rounded-xl shadow-xl p-8">
-          {activeCalc === 'circular-skirt' && <CircularSkirtCalc />}
-          {activeCalc === 'circular-frill' && <CircularFrillCalc />}
-          {activeCalc === 'ratio' && <RatioCalc />}
-          {activeCalc === 'pythagorean' && <PythagoreanCalc />}
+          {activeCalc === 'circular-skirt' && <CircularSkirtCalc t={t} />}
+          {activeCalc === 'circular-frill' && <CircularFrillCalc t={t} />}
+          {activeCalc === 'ratio' && <RatioCalc t={t} />}
+          {activeCalc === 'pythagorean' && <PythagoreanCalc t={t} />}
         </div>
       </div>
     </div>
@@ -76,7 +175,7 @@ const CraftingCalculator: React.FC = () => {
 };
 
 // Circular Skirt Calculator (Flare Skirt)
-const CircularSkirtCalc: React.FC = () => {
+const CircularSkirtCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
   const [waist, setWaist] = useState<string>('');
   const [angle, setAngle] = useState<string>('');
   const [length, setLength] = useState<string>('');
@@ -105,11 +204,11 @@ const CircularSkirtCalc: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Flare Skirt Pattern Calculator</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.skirtTitle}</h2>
       
       <div className="space-y-5">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Waist Size (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.waistSize}</label>
           <input
             type="number"
             value={waist}
@@ -120,7 +219,7 @@ const CircularSkirtCalc: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Desired Angle (degrees)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.desiredAngle}</label>
           <input
             type="number"
             value={angle}
@@ -128,11 +227,11 @@ const CircularSkirtCalc: React.FC = () => {
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
             placeholder="e.g., 180"
           />
-          <p className="text-sm text-gray-500 mt-1">90° = quarter circle, 180° = half circle, 360° = full circle</p>
+          <p className="text-sm text-gray-500 mt-1">{t.angleNote}</p>
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Length excluding belt (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.lengthExcludingBelt}</label>
           <input
             type="number"
             value={length}
@@ -146,24 +245,24 @@ const CircularSkirtCalc: React.FC = () => {
           onClick={calculate}
           className="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
         >
-          Calculate
+          {t.calculate}
         </button>
       </div>
 
       {results && (
         <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Calculation Results</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">{t.results}</h3>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-gray-700">A (Inner Radius):</span>
+              <span className="text-gray-700">{t.innerRadius}</span>
               <span className="text-2xl font-bold text-indigo-600">{results.A} cm</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-700">B (Outer Radius):</span>
+              <span className="text-gray-700">{t.outerRadius}</span>
               <span className="text-2xl font-bold text-indigo-600">{results.B} cm</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-700">C (Waist + Allowance):</span>
+              <span className="text-gray-700">{t.waistAllowance}</span>
               <span className="text-2xl font-bold text-indigo-600">{results.C} cm</span>
             </div>
           </div>
@@ -174,7 +273,7 @@ const CircularSkirtCalc: React.FC = () => {
 };
 
 // Circular Frill Calculator
-const CircularFrillCalc: React.FC = () => {
+const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
   const [arcLength, setArcLength] = useState<string>('200');
   const [angle, setAngle] = useState<string>('180');
   const [frillWidth, setFrillWidth] = useState<string>('5');
@@ -200,22 +299,22 @@ const CircularFrillCalc: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Circular Frill Radius Calculator</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.frillTitle}</h2>
       
       <div className="space-y-5">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Desired Arc Length (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.arcLength}</label>
           <input
             type="number"
             value={arcLength}
             onChange={(e) => setArcLength(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
           />
-          <p className="text-sm text-gray-500 mt-1">Length where the frill will be attached</p>
+          <p className="text-sm text-gray-500 mt-1">{t.arcNote}</p>
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Desired Angle (degrees)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.desiredAngle}</label>
           <input
             type="number"
             value={angle}
@@ -225,7 +324,7 @@ const CircularFrillCalc: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Frill Width (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.frillWidth}</label>
           <input
             type="number"
             value={frillWidth}
@@ -238,20 +337,20 @@ const CircularFrillCalc: React.FC = () => {
           onClick={calculate}
           className="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
         >
-          Calculate
+          {t.calculate}
         </button>
       </div>
 
       {results && (
         <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Calculation Results</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">{t.results}</h3>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-gray-700">Inner Circle Radius A:</span>
+              <span className="text-gray-700">{t.innerCircleRadius}</span>
               <span className="text-2xl font-bold text-indigo-600">{results.A} cm</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-700">Outer Circle Radius B:</span>
+              <span className="text-gray-700">{t.outerCircleRadius}</span>
               <span className="text-2xl font-bold text-indigo-600">{results.B} cm</span>
             </div>
           </div>
@@ -262,7 +361,7 @@ const CircularFrillCalc: React.FC = () => {
 };
 
 // Ratio/Scale Calculator
-const RatioCalc: React.FC = () => {
+const RatioCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
   const [known1, setKnown1] = useState<string>('');
   const [known2, setKnown2] = useState<string>('');
   const [target, setTarget] = useState<string>('');
@@ -271,20 +370,20 @@ const RatioCalc: React.FC = () => {
   const calculate = () => {
     const k1 = parseFloat(known1);
     const k2 = parseFloat(known2);
-    const t = parseFloat(target);
+    const tar = parseFloat(target);
 
-    if (!k1 || !k2 || !t) return;
+    if (!k1 || !k2 || !tar) return;
 
     // x : k1 = t : k2
     // x = (t * k1) / k2
-    const answer = (t * k1) / k2;
+    const answer = (tar * k1) / k2;
     setResult(Math.round(answer * 100) / 100);
   };
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Ratio Scale Calculator</h2>
-      <p className="text-gray-600 mb-6">Use this to scale patterns or create life-size items from references</p>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.ratioTitle}</h2>
+      <p className="text-gray-600 mb-6">{t.ratioSubtitle}</p>
       
       <div className="space-y-5">
         <div className="p-4 bg-gray-50 rounded-lg">
@@ -310,7 +409,7 @@ const RatioCalc: React.FC = () => {
             />
           </p>
           <p className="text-sm text-gray-500 text-center mt-3">
-            Example: If 3cm in pattern = 4cm in real life, what is 1cm in pattern?
+            {t.ratioExample}
           </p>
         </div>
 
@@ -318,16 +417,16 @@ const RatioCalc: React.FC = () => {
           onClick={calculate}
           className="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
         >
-          Calculate
+          {t.calculate}
         </button>
       </div>
 
       {result !== null && (
         <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Result</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">{t.result}</h3>
           <div className="text-center">
             <span className="text-4xl font-bold text-indigo-600">{result}</span>
-            <p className="text-gray-600 mt-2">units (same as inputs)</p>
+            <p className="text-gray-600 mt-2">{t.units}</p>
           </div>
         </div>
       )}
@@ -336,7 +435,7 @@ const RatioCalc: React.FC = () => {
 };
 
 // Pythagorean Theorem Calculator
-const PythagoreanCalc: React.FC = () => {
+const PythagoreanCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
   const [sideA, setSideA] = useState<string>('');
   const [sideB, setSideB] = useState<string>('');
   const [result, setResult] = useState<number | null>(null);
@@ -354,17 +453,17 @@ const PythagoreanCalc: React.FC = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Pythagorean Theorem Calculator</h2>
-      <p className="text-gray-600 mb-6">Calculate beveled edge lengths and diagonal measurements</p>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.pythagTitle}</h2>
+      <p className="text-gray-600 mb-6">{t.pythagSubtitle}</p>
       
       <div className="space-y-5">
         <div className="p-4 bg-gray-50 rounded-lg text-center">
           <p className="text-gray-700 font-mono text-lg mb-2">c² = a² + b²</p>
-          <p className="text-sm text-gray-500">Find the hypotenuse (c) from two sides</p>
+          <p className="text-sm text-gray-500">{t.pythagFormula}</p>
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Side A (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.sideA}</label>
           <input
             type="number"
             value={sideA}
@@ -375,7 +474,7 @@ const PythagoreanCalc: React.FC = () => {
         </div>
 
         <div>
-          <label className="block text-gray-700 font-medium mb-2">Side B (cm)</label>
+          <label className="block text-gray-700 font-medium mb-2">{t.sideB}</label>
           <input
             type="number"
             value={sideB}
@@ -389,15 +488,15 @@ const PythagoreanCalc: React.FC = () => {
           onClick={calculate}
           className="w-full bg-indigo-600 text-white py-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
         >
-          Calculate
+          {t.calculate}
         </button>
       </div>
 
       {result !== null && (
         <div className="mt-8 p-6 bg-indigo-50 rounded-lg border-2 border-indigo-200">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Result</h3>
+          <h3 className="text-xl font-bold text-gray-800 mb-4">{t.result}</h3>
           <div className="flex justify-between items-center">
-            <span className="text-gray-700">Hypotenuse (c):</span>
+            <span className="text-gray-700">{t.hypotenuse}</span>
             <span className="text-4xl font-bold text-indigo-600">{result} cm</span>
           </div>
         </div>
