@@ -62,7 +62,7 @@ const translations = {
     lengthExcludingBelt: "ベルトを除いた丈 (cm)",
     innerRadius: "内側の半径:",
     outerRadius: "外側の半径:",
-    waistAllowance: "ウエスト+ゆとりを除く:",
+    waistAllowance: "ウエスト(ゆとりを除く):",
     // Circular Frill
     frillTitle: "円形フリル半径計算",
     arcLength: "作りたい弧の長さ (cm)",
