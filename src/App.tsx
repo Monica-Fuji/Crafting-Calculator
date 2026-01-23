@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Calculator, Ruler, Triangle, Percent, Languages } from 'lucide-react';
-import './index.css';
 
 type CalculatorType = 'circular-skirt' | 'circular-frill' | 'ratio' | 'pythagorean';
 type Language = 'en' | 'ja';
@@ -19,23 +18,31 @@ const translations = {
     // Circular Skirt
     skirtTitle: "Flare Skirt Pattern Calculator",
     waistSize: "Waist Size (cm)",
+    waistPlaceholder: "e.g., 70",
     desiredAngle: "Desired Angle (degrees)",
+    anglePlaceholder: "e.g., 180",
     angleNote: "90° = quarter circle, 180° = half circle, 360° = full circle",
     lengthExcludingBelt: "Length excluding belt (cm)",
+    lengthPlaceholder: "e.g., 60",
     innerRadius: "Inner Radius:",
     outerRadius: "Outer Radius:",
     waistAllowance: "Waist(excluding ease):",
     // Circular Frill
     frillTitle: "Circular Frill Radius Calculator",
     arcLength: "Desired Arc Length (cm)",
+    arcPlaceholder: "e.g., 200",
     arcNote: "Length where the frill will be attached",
     frillWidth: "Frill Width (cm)",
+    frillWidthPlaceholder: "e.g., 5",
     innerCircleRadius: "Inner Circle Radius A:",
     outerCircleRadius: "Outer Circle Radius B:",
     // Ratio
     ratioTitle: "Ratio Scale Calculator",
     ratioSubtitle: "Use this to scale patterns or create life-size items from references",
     ratioExample: "Example: If 3cm in pattern = 4cm in real life, what is 1cm in pattern?",
+    ratioPlaceholder1: "3",
+    ratioPlaceholder2: "1",
+    ratioPlaceholder3: "4",
     result: "Result",
     units: "units (same as inputs)",
     // Pythagorean
@@ -43,7 +50,9 @@ const translations = {
     pythagSubtitle: "Calculate beveled edge lengths and diagonal measurements",
     pythagFormula: "Find the hypotenuse (c) from two sides",
     sideA: "Side A (cm)",
+    sideAPlaceholder: "e.g., 30",
     sideB: "Side B (cm)",
+    sideBPlaceholder: "e.g., 40",
     hypotenuse: "Hypotenuse (c):",
   },
   ja: {
@@ -58,23 +67,31 @@ const translations = {
     // Circular Skirt
     skirtTitle: "フレアスカート製図計算",
     waistSize: "ウエストサイズ (cm)",
+    waistPlaceholder: "例: 70",
     desiredAngle: "作りたい角度 (度)",
+    anglePlaceholder: "例: 180",
     angleNote: "90° = 四分円、180° = 半円、360° = 全円",
     lengthExcludingBelt: "ベルトを除いた丈 (cm)",
+    lengthPlaceholder: "例: 60",
     innerRadius: "内側の半径:",
     outerRadius: "外側の半径:",
     waistAllowance: "ウエスト(ゆとりを除く):",
     // Circular Frill
     frillTitle: "円形フリル半径計算",
     arcLength: "作りたい弧の長さ (cm)",
+    arcPlaceholder: "例: 200",
     arcNote: "フリルを取り付ける箇所の長さ",
     frillWidth: "フリルの長さ(幅) (cm)",
+    frillWidthPlaceholder: "例: 5",
     innerCircleRadius: "内側の円の半径 A:",
     outerCircleRadius: "外側の円の半径 B:",
     // Ratio
     ratioTitle: "比率スケール計算",
     ratioSubtitle: "パターンの拡大縮小や、実物大アイテムの作成に使用",
     ratioExample: "例: パターンの3cmが実物の4cmの場合、パターンの1cmは？",
+    ratioPlaceholder1: "3",
+    ratioPlaceholder2: "1",
+    ratioPlaceholder3: "4",
     result: "結果",
     units: "単位（入力と同じ）",
     // Pythagorean
@@ -82,7 +99,9 @@ const translations = {
     pythagSubtitle: "斜辺の長さや対角線の測定を計算",
     pythagFormula: "2辺から斜辺(c)を求める",
     sideA: "辺 A (cm)",
+    sideAPlaceholder: "例: 30",
     sideB: "辺 B (cm)",
+    sideBPlaceholder: "例: 40",
     hypotenuse: "斜辺 (c):",
   }
 };
@@ -215,7 +234,7 @@ const CircularSkirtCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={waist}
             onChange={(e) => setWaist(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 70"
+            placeholder={t.waistPlaceholder}
           />
         </div>
 
@@ -226,7 +245,7 @@ const CircularSkirtCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={angle}
             onChange={(e) => setAngle(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 180"
+            placeholder={t.anglePlaceholder}
           />
           <p className="text-sm text-gray-500 mt-1">{t.angleNote}</p>
         </div>
@@ -238,7 +257,7 @@ const CircularSkirtCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={length}
             onChange={(e) => setLength(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 60"
+            placeholder={t.lengthPlaceholder}
           />
         </div>
 
@@ -310,7 +329,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={arcLength}
             onChange={(e) => setArcLength(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 200"
+            placeholder={t.arcPlaceholder}
           />
           <p className="text-sm text-gray-500 mt-1">{t.arcNote}</p>
         </div>
@@ -322,7 +341,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={angle}
             onChange={(e) => setAngle(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 180"
+            placeholder={t.anglePlaceholder}
           />
         </div>
 
@@ -333,7 +352,7 @@ const CircularFrillCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={frillWidth}
             onChange={(e) => setFrillWidth(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 5"
+            placeholder={t.frillWidthPlaceholder}
           />
         </div>
 
@@ -397,19 +416,19 @@ const RatioCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
               value={known1}
               onChange={(e) => setKnown1(e.target.value)}
               className="w-20 p-1 border-2 border-gray-300 rounded text-center inline-block"
-              placeholder="3"
+              placeholder={t.ratioPlaceholder1}
             /> = <input 
               type="number"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
               className="w-20 p-1 border-2 border-gray-300 rounded text-center inline-block"
-              placeholder="1"
+              placeholder={t.ratioPlaceholder2}
             /> : <input 
               type="number"
               value={known2}
               onChange={(e) => setKnown2(e.target.value)}
               className="w-20 p-1 border-2 border-gray-300 rounded text-center inline-block"
-              placeholder="4"
+              placeholder={t.ratioPlaceholder3}
             />
           </p>
           <p className="text-sm text-gray-500 text-center mt-3">
@@ -473,7 +492,7 @@ const PythagoreanCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={sideA}
             onChange={(e) => setSideA(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 30"
+            placeholder={t.sideAPlaceholder}
           />
         </div>
 
@@ -484,7 +503,7 @@ const PythagoreanCalc: React.FC<{t: typeof translations.en}> = ({t}) => {
             value={sideB}
             onChange={(e) => setSideB(e.target.value)}
             className="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:outline-none"
-            placeholder="e.g., 40"
+            placeholder={t.sideBPlaceholder}
           />
         </div>
 
